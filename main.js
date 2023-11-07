@@ -19,13 +19,14 @@ let colunaAtual = 0
 
 //Definindo o array de palavras
 let palavras = ['SENAI', 'NOITE', 'MILHO', 'LETRA', 'MOUSE']
+// console.log(palavra)
 
 //Seleciona uma palavra aleatória dentro do array palavras e guarda na variável palavra
 let palavra = palavras[Math.floor(Math.random() * palavras.length)]
 let palavraMapa = {}
-for (let i = 0; i < palavras.length; i++) {
+for (let i = 0; i < palavra.length; i++) {
     //separa as letras da palavra
-    palavraMapa[palavras[i] = i]//separa cada letra em uma posição do palavraLinha -- palavraMapa ['S', 'E', 'A', 'N','I'],
+    palavraMapa[palavra[i]] = i//separa cada letra em uma posição do palavraLinha -- palavraMapa ['S', 'E', 'A', 'N','I'],
 }
 
 const tentativas = []
@@ -35,7 +36,7 @@ for (let linhaIndex = 0; linhaIndex < linha; linhaIndex++) {
     //vai montar as linhas
     tentativas[linhaIndex] = new Array(coluna)
     const divisaoLinha = document.createElement('div')  //cria um novo array com o numero total de colunas
-    divisaoLinha.setAttribute('id', 'linha' + linhaIndex) //cria uma nova dic
+    divisaoLinha.setAttribute('id', 'linha' + linhaIndex) //cria uma nova div
     divisaoLinha.setAttribute('class', 'div-linha')    //define o atributo ID
     for (let colunaIndex = 0; colunaIndex < coluna; colunaIndex++) {
         //vai mostrar as colunas
@@ -76,24 +77,24 @@ const checkTentativa = () => {
             }
         }
     }
-    if (tentativa === palavra) {
+    if(tentativa === palavra){
         window.alert('Parabéns, você conseguiu!')
         return
-    } else {
-        if (linhaAtual === linha - 1) {
+    }else{
+        if(linhaAtual === linha-1){
             //verifica se todas alinhas já foram
-            window.alert('Errou:')
-        } else {
+            window.alert( 'Errou:')
+        }else{
             proximaLinha()
         }
     }
 }
 
 
-const proximaLinha = () => {
+const proximaLinha = () =>{
     let digColuna = document.querySelectorAll('.digitando')
     //seleciona todos os elementios com a classe digitando
-    for (let i = 0; i < digColuna.length; i++) {
+    for(let i = 0; i< digColuna.length; i++){
         digColuna[i].classList.remove('digitando')
         digColuna[i].classList.add('desativado')
     }
@@ -101,29 +102,29 @@ const proximaLinha = () => {
     colunaAtual = 0
     //linhaAtual++ para ir para a proxima linha e a coluna volta a ser 0 para ser a primeira caixinha da linha
 
-    const linhaAtualElemento = document.querySelector('#linha' + linhaAtual)
+    const linhaAtualElemento = document.querySelector('#linha'+linhaAtual)
     let atColuna = linhaAtualElemento.querySelectorAll('.div-coluna')
-    for (let i = 0; i < atColuna.length; i++) {
+    for(let i = 0; i< atColuna.length; i++){
         atColuna[i].classList.remove('desativado')
         atColuna[i].classList.add('digitando')
     }
 }
 
 const tecladoOnClick = key => {
-    if (colunaAtual === coluna) {
+    if(colunaAtual === coluna){
         //verifica se acabou as colunas
         return
     }
 
-    const divAtual = document.querySelector('#linha' + linhaAtual + 'coluna' + colunaAtual)
+    const divAtual = document.querySelector('#linha'+linhaAtual+'coluna'+colunaAtual)
     divAtual.textContent = key // o conteudo do texto será igual a tecla digitada
 
-    tentativas[linhaAtual][colunaAtual] = key
+    tentativas[linhaAtual][colunaAtual]=key
     colunaAtual++
 }
 
 const criarLinhaTeclado = (keys, linhaTeclado) => {
-    keys.forEach(key => {
+    keys.forEach(key =>{
         //vai ler todas as teclas
         let botaoElemento = document.createElement('button')//vai criar os botões
         botaoElemento.textContent = key
@@ -138,12 +139,12 @@ criarLinhaTeclado(teclaSegundaLinha, segundaLinha)
 criarLinhaTeclado(teclaTerceiraLinha, terceiraLinha)
 
 const backspace = () => {
-    if (colunaAtual === 0) {
+    if(colunaAtual === 0){
         return
     }
     colunaAtual--
     tentativas[linhaAtual][colunaAtual] = ''//o quadrado volta a ficar vazio
-    const div = document.querySelector('#linha' + linhaAtual + 'coluna' + colunaAtual)
+    const div = document.querySelector('#linha'+linhaAtual+'coluna'+colunaAtual)
     div.textContent = ''
 }
 
@@ -158,13 +159,13 @@ enterBotao.addEventListener('click', checkTentativa)
 enterBotao.textContent = 'ENTER'
 apagaEnter.append(enterBotao)
 
-document.onkeydown = function (evt) {
+document.onkeydown = function(evt){
     evt = evt || window.evt
-    if (evt.key === 'Enter') {
+    if(evt.key === 'Enter'){
         checkTentativa()
-    } else if (evt.key === 'Backspace') {
+    }else if (evt.key === 'Backspace'){
         backspace()
-    } else {
-        tecladoOnClick(evt.key.toLocaleLowerCase())
+    }else{
+        tecladoOnClick(evt.key.toUpperCase())
     }
 }
